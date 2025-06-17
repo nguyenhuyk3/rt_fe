@@ -273,7 +273,19 @@ class _PaymentButton extends StatelessWidget {
         break;
       case PaymentMethod.moMo:
         // Xử lý thanh toán MoMo
-        print('Processing MoMo payment...');
+        logger.i('Processing MoMo payment...');
+
+        final paymentBloc = context.read<PaymentBloc>();
+
+        paymentBloc.add(
+          PaymentCreated(
+            orderId: 6, // Thay bằng orderId thực tế
+            amount: 100249, // Thay bằng số tiền thực tế
+            accessToken:
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM4YTM5Y2ZkLTlhZWQtNDc5NC04NmJlLTljZTcxZDBmOTcyMCIsImlzcyI6ImE0MDRmMWMxLTcwNTgtNGFmNy05NzZhLTNhYWY2Zjc0MmZlOCIsImVtYWlsIjoiaHV5a2ltY3Vvbmc1QGdtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciIsImlzc3VlZF9hdCI6IjIwMjUtMDYtMTRUMTg6NDI6NTUuOTY2NjA2MSswNzowMCIsImlzc3VlZCI6MTc0OTkwMTM3NSwiZXhwaXJlZF9hdCI6IjIwMjUtMDYtMTZUMjA6NDI6NTUuOTY2NjA2MSswNzowMCIsImV4cCI6MTc1MDA4MTM3NX0.4Aj8X7Jkiyzvfz0e1PBRxN97EX1s9urZQL-ucQn-xlk', // Lấy từ Auth
+          ),
+        );
+
         break;
       case PaymentMethod.shopeePay:
         // Xử lý thanh toán ShopeePay

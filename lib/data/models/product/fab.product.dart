@@ -18,3 +18,10 @@ class FABProduct extends Equatable {
   @override
   List<Object> get props => [id, name, type, imageUrl, price];
 }
+
+class BasicFABInfo {
+  final String fABName;
+  final int quantity;
+
+  const BasicFABInfo({required this.fABName, required this.quantity});
+}

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rt_mobile/data/models/product/cart.dart';
 import 'package:rt_mobile/data/models/product/fab.product.dart';
+import 'package:rt_mobile/data/repositories/payment.dart';
 import 'package:rt_mobile/presentation/booking_ticket/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/booking_ticket/step_three/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/booking_ticket/step_three/step_three.dart';
 import 'package:rt_mobile/presentation/booking_ticket/step_three/view/view.dart';
 import 'package:rt_mobile/presentation/booking_ticket/step_two/selecting_fab/bloc/bloc.dart';
@@ -466,8 +468,17 @@ class _CartBottomSheet extends StatelessWidget {
                                             (_) =>
                                                 ChangeTabCubit<PaymentMethod>(
                                                   initialState:
-                                                      PaymentMethod.shopeePay,
+                                                      PaymentMethod.moMo,
                                                 ),
+                                      ),
+                                      BlocProvider(
+                                        create:
+                                            (context) => PaymentBloc(
+                                              paymentRepository:
+                                                  RepositoryProvider.of<
+                                                    PaymentRepository
+                                                  >(context),
+                                            ),
                                       ),
                                     ],
                                     child: StepThreeScreen(),

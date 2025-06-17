@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rt_mobile/core/constants/others.dart';
 
 import 'package:rt_mobile/core/utils/convetors/color.dart';
 import 'package:rt_mobile/core/utils/convetors/string.dart';
 import 'package:rt_mobile/data/models/product/cart.dart';
 import 'package:rt_mobile/presentation/booking_ticket/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/booking_ticket/step_three/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/cubit/change_tab/change_tab.dart';
 
 part 'film_info.dart';
@@ -16,33 +18,61 @@ class StepThreeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: _buildAppBar(context),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _FilmInfoCard(),
+    return BlocListener<PaymentBloc, PaymentState>(
+      listener: (context, state) async {
+        if (state is PaymentUrlCreated) {
+          final launched = await context.read<PaymentBloc>().launchPaymentUrl(
+            state.paymentUrl,
+          );
 
-                  SizedBox(height: 16),
+          if (!launched) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Không thể mở liên kết thanh toán MoMo')),
+            );
+          }
+        }
 
-                  _OrderDetailsCard(),
+        if (state is PaymentFailure) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('Lỗi: ${state.errorMessage}')));
+        }
 
-                  SizedBox(height: 16),
+        if (state is PaymentSuccess) {
+          // Hiển thị thông báo thành công, điều hướng, v.v.
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('Thanh toán thành công!')));
+        }
+      },
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        appBar: _buildAppBar(context),
+        body: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _FilmInfoCard(),
 
-                  _PaymentMethodsSection(),
-                ],
+                    SizedBox(height: 16),
+
+                    _OrderDetailsCard(),
+
+                    SizedBox(height: 16),
+
+                    _PaymentMethodsSection(),
+                  ],
+                ),
               ),
             ),
-          ),
 
-          _PaymentButton(),
-        ],
+            _PaymentButton(),
+          ],
+        ),
       ),
     );
   }
