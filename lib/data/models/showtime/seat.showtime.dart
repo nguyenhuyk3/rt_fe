@@ -44,6 +44,6 @@ class SeatShowtime {
   }
 
   Seat toSeat() {
-    return Seat(seatId: id);
+    return Seat(seatId: seatId);
   }
 }

@@ -6,9 +6,9 @@ import 'package:rt_mobile/core/utils/convetors/color.dart';
 import 'package:rt_mobile/core/utils/convetors/string.dart';
 import 'package:rt_mobile/data/models/product/cart.dart';
 import 'package:rt_mobile/presentation/booking_ticket/bloc/bloc.dart';
-import 'package:rt_mobile/presentation/booking_ticket/bloc/event.sub.dart';
 import 'package:rt_mobile/presentation/booking_ticket/step_three/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/cubit/change_tab/change_tab.dart';
+import 'package:rt_mobile/presentation/widgets/ticket_information_screen.dart';
 
 part 'film_info.dart';
 part 'order_detail.dart';
@@ -24,7 +24,7 @@ class StepThreeView extends StatelessWidget {
         BlocListener<BookingTicketBloc, BookingTicketState>(
           listenWhen:
               (prev, curr) =>
-                  prev.orderId != curr.orderId && curr.orderId != null,
+                  prev.orderId != curr.orderId && curr.orderId != -1,
           listener: (context, state) {
             final selectedPaymentMethod =
                 context.read<ChangeTabCubit<PaymentMethod>>().state;
@@ -32,9 +32,34 @@ class StepThreeView extends StatelessWidget {
             if (selectedPaymentMethod == PaymentMethod.moMo) {
               context.read<PaymentBloc>().add(
                 PaymentCreated(
-                  orderId: state.orderId!,
+                  orderId: state.orderId,
                   amount: state.totalAmount.toInt(),
-                  accessToken: 'your-access-token',
+                ),
+              );
+            }
+          },
+        ),
+        BlocListener<PaymentBloc, PaymentState>(
+          listenWhen: (prev, curr) => curr is PaymentUrlCreated,
+          listener: (context, state) {
+            if (state is PaymentUrlCreated) {
+              context.read<PaymentBloc>().launchPaymentUrl(
+                state.paymentDeepLink,
+              );
+            }
+          },
+        ),
+        BlocListener<PaymentBloc, PaymentState>(
+          listenWhen: (prev, curr) => curr is PaymentSuccess,
+          listener: (context, state) {
+            if (state is PaymentSuccess) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder:
+                      (_) => TicketInformationScreen(
+                        ticketInformation: state.ticketInformation,
+                      ),
                 ),
               );
             }

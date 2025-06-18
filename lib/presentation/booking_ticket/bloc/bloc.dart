@@ -30,7 +30,7 @@ class BookingTicketBloc extends Bloc<BookingTicketEvent, BookingTicketState> {
     on<BookingTicketRemoveFABFromOrder>(_onRemoveFAB);
     on<BookingTicketClearOrder>(_onClearOrder);
     on<BookingTicketChoseStartTime>(_onChoseStartTime);
-    on<BookingTicketCreteOrder>(_onCreateOrder);
+    on<BookingTicketCreateOrder>(_onCreateOrder);
   }
 
   void _onAddSeat(
@@ -163,17 +163,25 @@ class BookingTicketBloc extends Bloc<BookingTicketEvent, BookingTicketState> {
     BookingTicketChoseStartTime event,
     Emitter<BookingTicketState> emit,
   ) {
-    emit(state.copyWith(showDate: event.showDate, startTime: event.startTime));
+    emit(
+      state.copyWith(
+        showDate: event.showDate,
+        startTime: event.startTime,
+        showtimeId: event.showtimeId,
+      ),
+    );
   }
 
   FutureOr<void> _onCreateOrder(
-    BookingTicketCreteOrder event,
+    BookingTicketCreateOrder event,
     Emitter<BookingTicketState> emit,
   ) async {
     try {
       final orderId = await orderRepository.createOrder(
         request: event.toJson(),
       );
+
+      await Future.delayed(Duration(seconds: 1));
 
       emit(state.copyWith(orderId: orderId));
     } catch (e) {

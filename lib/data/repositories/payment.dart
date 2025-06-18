@@ -5,12 +5,12 @@ class PaymentRepository {
 
   PaymentRepository({required this.paymentService});
 
-  Future<String> createPaymentURL({
+  Future<String> createPaymentResponse({
     required int orderId,
     required int amount,
     required String accessToken,
   }) async {
-    final response = await paymentService.createPaymentURL(
+    final response = await paymentService.createPaymentResponse(
       orderId: orderId,
       amount: amount,
       accessToken: accessToken,
@@ -19,14 +19,14 @@ class PaymentRepository {
     if (response.isSuccess) {
       final rawData = response.data['data'];
 
-      if (rawData is Map && rawData['payment_url'] is String) {
-        return rawData['payment_url'];
+      if (rawData is Map && rawData['deep_link'] is String) {
+        return rawData['deep_link'];
       } else {
-        throw Exception("invalid response format: missing payment_url");
+        throw Exception("invalid response format: missing deep_link");
       }
     } else {
       throw Exception(
-        'failed to create payment URL (status code: ${response.statusCode})',
+        'failed to create payment response (status code: ${response.statusCode})',
       );
     }
   }

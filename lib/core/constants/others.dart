@@ -2,7 +2,6 @@
 
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
-import 'package:rt_mobile/app/paymentSuccess.dart';
 import 'package:rt_mobile/data/services/secure_storage.dart';
 import 'package:rt_mobile/presentation/authentication/login/view/login_screen.dart';
 import 'package:rt_mobile/presentation/home/home_screen.dart';
@@ -49,3 +48,4 @@ var SCREENS = [
 ];
 
 const double titleSize = 22;
+const REAL_ACCESS_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdlMDEwYjlmLTIzYmMtNDM3Zi1iMDU3LTVjZGU2MTRmYTkyNiIsImlzcyI6ImE0MDRmMWMxLTcwNTgtNGFmNy05NzZhLTNhYWY2Zjc0MmZlOCIsImVtYWlsIjoiaHV5a2ltY3Vvbmc1QGdtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciIsImlzc3VlZF9hdCI6IjIwMjUtMDYtMThUMTg6Mjg6MzQuMDExOTQ2NSswNzowMCIsImlzc3VlZCI6MTc1MDI0NjExNCwiZXhwaXJlZF9hdCI6IjIwMjUtMDYtMjBUMjA6Mjg6MzQuMDExOTQ2NSswNzowMCIsImV4cCI6MTc1MDQyNjExNH0.azwV30Fhm-uWi6fPWujKgR_s3PHTCU6OabLxIakExJ4';

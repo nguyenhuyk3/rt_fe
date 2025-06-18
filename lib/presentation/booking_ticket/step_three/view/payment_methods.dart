@@ -240,9 +240,10 @@ class _PaymentButton extends StatelessWidget {
           width: double.infinity,
           margin: EdgeInsets.fromLTRB(16, 10, 16, 10),
           child: ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
+              logger.i(context.read<BookingTicketBloc>().state);
               context.read<BookingTicketBloc>().add(
-                BookingTicketCreteOrder(
+                BookingTicketCreateOrder(
                   showtimeId:
                       context.read<BookingTicketBloc>().state.showtimeId,
                   showDate: context.read<BookingTicketBloc>().state.showDate,
@@ -262,7 +263,6 @@ class _PaymentButton extends StatelessWidget {
                           .toList(),
                 ),
               );
-              _handlePayment(context, selectedPaymentMethod);
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.amber,
@@ -285,41 +285,41 @@ class _PaymentButton extends StatelessWidget {
     );
   }
 
-  void _handlePayment(BuildContext context, PaymentMethod paymentMethod) {
-    // Xử lý thanh toán dựa vào payment method được chọn
-    switch (paymentMethod) {
-      case PaymentMethod.zaloPay:
-        // Xử lý thanh toán ZaloPay
-        print('Processing ZaloPay payment...');
-        break;
-      case PaymentMethod.moMo:
-        // Xử lý thanh toán MoMo
-        logger.i('Processing MoMo payment...');
+  // void _handlePayment(BuildContext context, PaymentMethod paymentMethod) {
+  //   // Xử lý thanh toán dựa vào payment method được chọn
+  //   switch (paymentMethod) {
+  //     case PaymentMethod.zaloPay:
+  //       // Xử lý thanh toán ZaloPay
+  //       print('Processing ZaloPay payment...');
+  //       break;
+  //     case PaymentMethod.moMo:
+  //       // Xử lý thanh toán MoMo
+  //       logger.i('Processing MoMo payment...');
 
-        final paymentBloc = context.read<PaymentBloc>();
+  //       final paymentBloc = context.read<PaymentBloc>();
 
-        paymentBloc.add(
-          PaymentCreated(
-            orderId: 6, // Thay bằng orderId thực tế
-            amount: 100249, // Thay bằng số tiền thực tế
-            accessToken:
-                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM4YTM5Y2ZkLTlhZWQtNDc5NC04NmJlLTljZTcxZDBmOTcyMCIsImlzcyI6ImE0MDRmMWMxLTcwNTgtNGFmNy05NzZhLTNhYWY2Zjc0MmZlOCIsImVtYWlsIjoiaHV5a2ltY3Vvbmc1QGdtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciIsImlzc3VlZF9hdCI6IjIwMjUtMDYtMTRUMTg6NDI6NTUuOTY2NjA2MSswNzowMCIsImlzc3VlZCI6MTc0OTkwMTM3NSwiZXhwaXJlZF9hdCI6IjIwMjUtMDYtMTZUMjA6NDI6NTUuOTY2NjA2MSswNzowMCIsImV4cCI6MTc1MDA4MTM3NX0.4Aj8X7Jkiyzvfz0e1PBRxN97EX1s9urZQL-ucQn-xlk', // Lấy từ Auth
-          ),
-        );
+  //       paymentBloc.add(
+  //         PaymentCreated(
+  //           orderId: 6, // Thay bằng orderId thực tế
+  //           amount: 100249, // Thay bằng số tiền thực tế
+  //           accessToken:
+  //               'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM4YTM5Y2ZkLTlhZWQtNDc5NC04NmJlLTljZTcxZDBmOTcyMCIsImlzcyI6ImE0MDRmMWMxLTcwNTgtNGFmNy05NzZhLTNhYWY2Zjc0MmZlOCIsImVtYWlsIjoiaHV5a2ltY3Vvbmc1QGdtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciIsImlzc3VlZF9hdCI6IjIwMjUtMDYtMTRUMTg6NDI6NTUuOTY2NjA2MSswNzowMCIsImlzc3VlZCI6MTc0OTkwMTM3NSwiZXhwaXJlZF9hdCI6IjIwMjUtMDYtMTZUMjA6NDI6NTUuOTY2NjA2MSswNzowMCIsImV4cCI6MTc1MDA4MTM3NX0.4Aj8X7Jkiyzvfz0e1PBRxN97EX1s9urZQL-ucQn-xlk', // Lấy từ Auth
+  //         ),
+  //       );
 
-        break;
-      case PaymentMethod.shopeePay:
-        // Xử lý thanh toán ShopeePay
-        print('Processing ShopeePay payment...');
-        break;
-      case PaymentMethod.atmCard:
-        // Xử lý thanh toán ATM Card
-        print('Processing ATM Card payment...');
-        break;
-      case PaymentMethod.international:
-        // Xử lý thanh toán International
-        print('Processing International payment...');
-        break;
-    }
-  }
+  //       break;
+  //     case PaymentMethod.shopeePay:
+  //       // Xử lý thanh toán ShopeePay
+  //       print('Processing ShopeePay payment...');
+  //       break;
+  //     case PaymentMethod.atmCard:
+  //       // Xử lý thanh toán ATM Card
+  //       print('Processing ATM Card payment...');
+  //       break;
+  //     case PaymentMethod.international:
+  //       // Xử lý thanh toán International
+  //       print('Processing International payment...');
+  //       break;
+  //   }
+  // }
 }

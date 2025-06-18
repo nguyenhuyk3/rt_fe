@@ -77,13 +77,13 @@ class BookingTicketChoseStartTime extends BookingTicketEvent {
   List<Object> get props => [startTime];
 }
 
-class BookingTicketCreteOrder extends BookingTicketEvent {
+class BookingTicketCreateOrder extends BookingTicketEvent {
   final int showtimeId;
   final String showDate;
   final List<Seat> seats;
   final List<FAB> fABs;
 
-  const BookingTicketCreteOrder({
+  const BookingTicketCreateOrder({
     required this.showtimeId,
     required this.showDate,
     required this.seats,
