@@ -65,12 +65,40 @@ class BookingTicketClearOrder extends BookingTicketEvent {}
 class BookingTicketChoseStartTime extends BookingTicketEvent {
   final String showDate;
   final String startTime;
+  final int showtimeId;
 
   const BookingTicketChoseStartTime({
     required this.showDate,
     required this.startTime,
+    required this.showtimeId,
   });
 
   @override
   List<Object> get props => [startTime];
+}
+
+class BookingTicketCreteOrder extends BookingTicketEvent {
+  final int showtimeId;
+  final String showDate;
+  final List<Seat> seats;
+  final List<FAB> fABs;
+
+  const BookingTicketCreteOrder({
+    required this.showtimeId,
+    required this.showDate,
+    required this.seats,
+    required this.fABs,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'showtime_id': showtimeId,
+      'show_date': showDate,
+      'seats': seats.map((seat) => seat.toJson()).toList(),
+      'fabs': fABs.map((fab) => fab.toJson()).toList(),
+    };
+  }
+
+  @override
+  List<Object> get props => [showtimeId, showDate, seats, fABs];
 }

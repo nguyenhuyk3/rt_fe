@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 
 class FABProduct extends Equatable {
-  final String id;
+  final int id;
   final String name;
   final String type;
   final String imageUrl;
-  final double price;
+  final int price;
 
   const FABProduct({
     required this.id,
@@ -14,6 +14,16 @@ class FABProduct extends Equatable {
     required this.imageUrl,
     required this.price,
   });
+
+  factory FABProduct.fromJson(Map<String, dynamic> json) {
+    return FABProduct(
+      id: json['id'] as int,
+      name: json['name'] as String,
+      type: json['type'] as String,
+      imageUrl: json['image_url'] as String,
+      price: (json['price'] as int) * 1000,
+    );
+  }
 
   @override
   List<Object> get props => [id, name, type, imageUrl, price];

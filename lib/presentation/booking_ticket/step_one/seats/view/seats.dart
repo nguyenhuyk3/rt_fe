@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rt_mobile/core/constants/errors.dart';
+import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/core/utils/convetors/color.dart';
 import 'package:rt_mobile/data/models/showtime/seat.showtime.dart';
 import 'package:rt_mobile/presentation/booking_ticket/bloc/bloc.dart';
@@ -78,7 +79,7 @@ class SeatsView extends StatelessWidget {
                       Icon(Icons.event_busy, size: 64, color: Colors.white70),
 
                       const SizedBox(height: 16),
-                      
+
                       const Text(
                         NO_SHOWTIME_SEAT,
                         style: TextStyle(
@@ -209,10 +210,19 @@ class _SeatRows extends StatelessWidget {
             onTap: () {
               if (seat.status == 'available') {
                 context.read<SeatsBloc>().add(SeatsToggled(seat.seatId));
+                context.read<SeatsBloc>().add(SeatsToggled(pair.seatId));
 
                 final isSelected = selectedSeatIds.contains(seat.seatId);
 
                 if (isSelected) {
+                  logger.i(seat.seatId);
+
+                  context.read<BookingTicketBloc>().add(
+                    BookingTicketRemoveSeatFromOrder(
+                      seat: seat,
+                      isCoupled: true,
+                    ),
+                  );
                   context.read<BookingTicketBloc>().add(
                     BookingTicketRemoveSeatFromOrder(
                       seat: seat,
@@ -222,6 +232,9 @@ class _SeatRows extends StatelessWidget {
                 } else {
                   context.read<BookingTicketBloc>().add(
                     BookingTicketAddSeatToOrder(seat: seat, isCoupled: true),
+                  );
+                  context.read<BookingTicketBloc>().add(
+                    BookingTicketAddSeatToOrder(seat: pair, isCoupled: true),
                   );
                 }
               }

@@ -2,15 +2,20 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/data/models/product/cart.dart';
 
 import 'package:rt_mobile/data/models/product/fab.product.dart';
+import 'package:rt_mobile/data/repositories/fab_repository.dart';
 
 part 'event.dart';
 part 'state.dart';
 
 class SelectingFABBloc extends Bloc<SelectingFABEvent, SelectingFABState> {
-  SelectingFABBloc() : super(const SelectingFABState()) {
+  final FABRepository fABRepository;
+
+  SelectingFABBloc({required this.fABRepository})
+    : super(const SelectingFABState()) {
     on<SelectingFABLoadFoodItems>(_onLoadFoodItems);
     on<SelectingFABAddToCart>(_onAddToCart);
     on<SelectingFABRemoveFromCart>(_onRemoveFromCart);
@@ -18,67 +23,21 @@ class SelectingFABBloc extends Bloc<SelectingFABEvent, SelectingFABState> {
     on<SelectingFABProcessOrder>(_onProcessOrder);
   }
 
-  final List<FABProduct> _mockFABItems = [
-    const FABProduct(
-      id: '1',
-      name: 'Bắp rang bơ lớn',
-      type: 'Snack',
-      imageUrl:
-          'https://images.unsplash.com/photo-1578849278619-e73505e9610f?w=300',
-      price: 85000,
-    ),
-    const FABProduct(
-      id: '2',
-      name: 'Coca Cola',
-      type: 'Drink',
-      imageUrl:
-          'https://images.unsplash.com/photo-1561758033-d89a9ad46330?w=300',
-      price: 45000,
-    ),
-    const FABProduct(
-      id: '3',
-      name: 'Combo Bắp + Nước',
-      type: 'Combo',
-      imageUrl:
-          'https://images.unsplash.com/photo-1585647347483-22b66260dfff?w=300',
-      price: 120000,
-    ),
-    const FABProduct(
-      id: '4',
-      name: 'Kẹo gấu Haribo',
-      type: 'Snack',
-      imageUrl:
-          'https://images.unsplash.com/photo-1582058091505-f87a2e55a40f?w=300',
-      price: 35000,
-    ),
-    const FABProduct(
-      id: '5',
-      name: 'Sprite',
-      type: 'Drink',
-      imageUrl:
-          'https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=300',
-      price: 45000,
-    ),
-    const FABProduct(
-      id: '6',
-      name: 'Nachos phô mai',
-      type: 'Snack',
-      imageUrl:
-          'https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=300',
-      price: 65000,
-    ),
-  ];
-
   FutureOr<void> _onLoadFoodItems(
     SelectingFABLoadFoodItems event,
     Emitter<SelectingFABState> emit,
-  ) {
+  ) async {
     emit(state.copyWith(isLoading: true));
 
-    emit(state.copyWith(fABItems: _mockFABItems, isLoading: false));
-    // Future.delayed(const Duration(milliseconds: 500), () {
-    //   emit(state.copyWith(fABItems: _mockFABItems, isLoading: false));
-    // });
+    try {
+      final allFABs = await fABRepository.getAllFABs();
+
+      logger.d(allFABs);
+
+      emit(state.copyWith(fABItems: allFABs, isLoading: false));
+    } catch (e) {
+      emit(state.copyWith(errorMessage: e.toString()));
+    }
   }
 
   FutureOr<void> _onAddToCart(

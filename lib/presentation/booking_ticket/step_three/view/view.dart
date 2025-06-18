@@ -6,6 +6,7 @@ import 'package:rt_mobile/core/utils/convetors/color.dart';
 import 'package:rt_mobile/core/utils/convetors/string.dart';
 import 'package:rt_mobile/data/models/product/cart.dart';
 import 'package:rt_mobile/presentation/booking_ticket/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/booking_ticket/bloc/event.sub.dart';
 import 'package:rt_mobile/presentation/booking_ticket/step_three/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/cubit/change_tab/change_tab.dart';
 
@@ -18,33 +19,28 @@ class StepThreeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<PaymentBloc, PaymentState>(
-      listener: (context, state) async {
-        if (state is PaymentUrlCreated) {
-          final launched = await context.read<PaymentBloc>().launchPaymentUrl(
-            state.paymentUrl,
-          );
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<BookingTicketBloc, BookingTicketState>(
+          listenWhen:
+              (prev, curr) =>
+                  prev.orderId != curr.orderId && curr.orderId != null,
+          listener: (context, state) {
+            final selectedPaymentMethod =
+                context.read<ChangeTabCubit<PaymentMethod>>().state;
 
-          if (!launched) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Không thể mở liên kết thanh toán MoMo')),
-            );
-          }
-        }
-
-        if (state is PaymentFailure) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text('Lỗi: ${state.errorMessage}')));
-        }
-
-        if (state is PaymentSuccess) {
-          // Hiển thị thông báo thành công, điều hướng, v.v.
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text('Thanh toán thành công!')));
-        }
-      },
+            if (selectedPaymentMethod == PaymentMethod.moMo) {
+              context.read<PaymentBloc>().add(
+                PaymentCreated(
+                  orderId: state.orderId!,
+                  amount: state.totalAmount.toInt(),
+                  accessToken: 'your-access-token',
+                ),
+              );
+            }
+          },
+        ),
+      ],
       child: Scaffold(
         backgroundColor: Colors.black,
         appBar: _buildAppBar(context),

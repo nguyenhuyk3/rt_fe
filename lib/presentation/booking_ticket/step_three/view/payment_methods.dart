@@ -241,6 +241,27 @@ class _PaymentButton extends StatelessWidget {
           margin: EdgeInsets.fromLTRB(16, 10, 16, 10),
           child: ElevatedButton(
             onPressed: () {
+              context.read<BookingTicketBloc>().add(
+                BookingTicketCreteOrder(
+                  showtimeId:
+                      context.read<BookingTicketBloc>().state.showtimeId,
+                  showDate: context.read<BookingTicketBloc>().state.showDate,
+                  seats:
+                      context
+                          .read<BookingTicketBloc>()
+                          .state
+                          .seats
+                          .map((seat) => seat.toSeat())
+                          .toList(),
+                  fABs:
+                      context
+                          .read<BookingTicketBloc>()
+                          .state
+                          .fABs
+                          .map((fab) => fab.toFAB())
+                          .toList(),
+                ),
+              );
               _handlePayment(context, selectedPaymentMethod);
             },
             style: ElevatedButton.styleFrom(

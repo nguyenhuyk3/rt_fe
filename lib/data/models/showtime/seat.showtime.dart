@@ -1,3 +1,5 @@
+import 'package:rt_mobile/presentation/booking_ticket/bloc/event.sub.dart';
+
 class SeatShowtime {
   final int id;
   final int showtimeId;
@@ -39,5 +41,9 @@ class SeatShowtime {
               ? DateTime.tryParse(json['booked_at'])
               : null,
     );
+  }
+
+  Seat toSeat() {
+    return Seat(seatId: id);
   }
 }

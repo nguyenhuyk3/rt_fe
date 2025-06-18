@@ -9,15 +9,20 @@ import 'package:rt_mobile/data/models/product/cart.dart';
 import 'package:rt_mobile/data/models/product/fab.product.dart';
 import 'package:rt_mobile/data/models/showtime/seat.showtime.dart';
 import 'package:rt_mobile/data/repositories/film.dart';
+import 'package:rt_mobile/data/repositories/order.dart';
+import 'package:rt_mobile/presentation/booking_ticket/bloc/event.sub.dart';
 
 part 'event.dart';
 part 'state.dart';
 
 class BookingTicketBloc extends Bloc<BookingTicketEvent, BookingTicketState> {
   final FilmRepository filmRepository;
+  final OrderRepository orderRepository;
 
-  BookingTicketBloc({required this.filmRepository})
-    : super(BookingTicketState()) {
+  BookingTicketBloc({
+    required this.filmRepository,
+    required this.orderRepository,
+  }) : super(BookingTicketState()) {
     on<BookingTicketGetFilm>(_onGetFilm);
     on<BookingTicketAddSeatToOrder>(_onAddSeat);
     on<BookingTicketRemoveSeatFromOrder>(_onRemoveSeat);
@@ -25,6 +30,7 @@ class BookingTicketBloc extends Bloc<BookingTicketEvent, BookingTicketState> {
     on<BookingTicketRemoveFABFromOrder>(_onRemoveFAB);
     on<BookingTicketClearOrder>(_onClearOrder);
     on<BookingTicketChoseStartTime>(_onChoseStartTime);
+    on<BookingTicketCreteOrder>(_onCreateOrder);
   }
 
   void _onAddSeat(
@@ -63,19 +69,19 @@ class BookingTicketBloc extends Bloc<BookingTicketEvent, BookingTicketState> {
   ) {
     final updatedFABs = List<CartItem>.from(state.fABs);
 
-    // Tìm xem sản phẩm đã có trong cart chưa
+    // Find out if the product is already in the cart
     final existingIndex = updatedFABs.indexWhere(
       (item) => item.fABProduct.id == event.fAB.id,
     );
 
     if (existingIndex != -1) {
-      // Nếu đã có, tăng quantity
+      // If already exists, increase quantity
       final existingItem = updatedFABs[existingIndex];
       updatedFABs[existingIndex] = existingItem.copyWith(
         quantity: existingItem.quantity + 1,
       );
     } else {
-      // Nếu chưa có, thêm mới
+      // If not, add new
       updatedFABs.add(CartItem(fABProduct: event.fAB, quantity: 1));
     }
 
@@ -98,12 +104,12 @@ class BookingTicketBloc extends Bloc<BookingTicketEvent, BookingTicketState> {
       final existingItem = updatedFABs[existingIndex];
 
       if (existingItem.quantity > 1) {
-        // Nếu quantity > 1, giảm quantity
+        // If quantity > 1, decrease quantity
         updatedFABs[existingIndex] = existingItem.copyWith(
           quantity: existingItem.quantity - 1,
         );
       } else {
-        // Nếu quantity = 1, xóa khỏi cart
+        // If quantity = 1, delete from cart
         updatedFABs.removeAt(existingIndex);
       }
     }
@@ -158,5 +164,20 @@ class BookingTicketBloc extends Bloc<BookingTicketEvent, BookingTicketState> {
     Emitter<BookingTicketState> emit,
   ) {
     emit(state.copyWith(showDate: event.showDate, startTime: event.startTime));
+  }
+
+  FutureOr<void> _onCreateOrder(
+    BookingTicketCreteOrder event,
+    Emitter<BookingTicketState> emit,
+  ) async {
+    try {
+      final orderId = await orderRepository.createOrder(
+        request: event.toJson(),
+      );
+
+      emit(state.copyWith(orderId: orderId));
+    } catch (e) {
+      emit(state.copyWith(messageError: e.toString()));
+    }
   }
 }

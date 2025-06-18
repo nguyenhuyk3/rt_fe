@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:rt_mobile/data/models/product/cart.dart';
 import 'package:rt_mobile/data/models/product/fab.product.dart';
 import 'package:rt_mobile/data/repositories/payment.dart';
@@ -98,7 +99,6 @@ class _CinemaSelectingFABView extends StatelessWidget {
                   Tab(text: 'Tất cả'),
                   Tab(text: 'Đồ ăn'),
                   Tab(text: 'Đồ uống'),
-                  Tab(text: 'Combo'),
                 ],
               ),
             ),
@@ -113,9 +113,8 @@ class _CinemaSelectingFABView extends StatelessWidget {
           child: const TabBarView(
             children: [
               _FoodGridView(type: 'All'),
-              _FoodGridView(type: 'Snack'),
-              _FoodGridView(type: 'Drink'),
-              _FoodGridView(type: 'Combo'),
+              _FoodGridView(type: 'food'),
+              _FoodGridView(type: 'beverage'),
             ],
           ),
         ),

@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import 'package:rt_mobile/data/models/product/fab.product.dart';
+import 'package:rt_mobile/presentation/booking_ticket/bloc/event.sub.dart';
 
 class CartItem extends Equatable {
   final FABProduct fABProduct;
@@ -13,6 +14,10 @@ class CartItem extends Equatable {
       fABProduct: fABProduct,
       quantity: quantity ?? this.quantity,
     );
+  }
+
+  FAB toFAB() {
+    return FAB(fABId: fABProduct.id, quantity: quantity);
   }
 
   @override

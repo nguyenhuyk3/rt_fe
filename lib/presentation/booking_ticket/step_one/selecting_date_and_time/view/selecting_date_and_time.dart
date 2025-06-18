@@ -122,6 +122,9 @@ class _SelectingDateAndTimeContainer extends StatelessWidget {
                       BookingTicketChoseStartTime(
                         showDate: dates[selectedIndex],
                         startTime: extractStartTime(input: times[0]),
+                        showtimeId: int.parse(
+                          extractShowtimeId(input: times[0]),
+                        ),
                       ),
                     );
                   });
@@ -154,6 +157,9 @@ class _SelectingDateAndTimeContainer extends StatelessWidget {
                             BookingTicketChoseStartTime(
                               showDate: dates[selectedIndex],
                               startTime: extractStartTime(input: time),
+                              showtimeId: int.parse(
+                                extractShowtimeId(input: time),
+                              ),
                             ),
                           );
                         },
