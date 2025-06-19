@@ -26,26 +26,19 @@ const LENGTH_OF_OTP = 6;
 const TIME_FOR_RESENDING_MAIL = 10;
 const BASE_URL = 'http://192.168.2.70:8000';
 
-var SCREENS = [
-  // MovieTicketScreen(
-  //   imageUrl: 'https://example.com/avengers-poster.jpg',
-  //   filmDuration: '2 hours 29 minutes',
-  //   genres: 'Action, adventure, sci-fi',
-  //   seats: 'Seat H7, H8',
-  //   total: '210.000 VND',
-  //   cinemaLocation: '4th floor, Vincom Ocean Park, Da Ton, Gia Lam, Ha Noi',
-  //   fabInfoList: [
-  //     BasicFABInfo(name: 'Bắp rang bơ lớn', quantity: 2),
-  //     BasicFABInfo(name: 'Coca Cola', quantity: 2),
-  //     BasicFABInfo(name: 'Kẹo socola', quantity: 1),
-  //     BasicFABInfo(name: 'Nước cam ép', quantity: 1),
-  //     BasicFABInfo(name: 'Bánh quy', quantity: 3),
-  //     BasicFABInfo(name: 'Nước suối', quantity: 2),
-  //   ],
-  // ),
-  HomeScreen(),
-  const LoginScreen(),
-];
+// cities
+const CITIES = {'HO_CHI_MINH': 'Hồ Chí Minh'};
 
-const double titleSize = 22;
-const REAL_ACCESS_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdlMDEwYjlmLTIzYmMtNDM3Zi1iMDU3LTVjZGU2MTRmYTkyNiIsImlzcyI6ImE0MDRmMWMxLTcwNTgtNGFmNy05NzZhLTNhYWY2Zjc0MmZlOCIsImVtYWlsIjoiaHV5a2ltY3Vvbmc1QGdtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciIsImlzc3VlZF9hdCI6IjIwMjUtMDYtMThUMTg6Mjg6MzQuMDExOTQ2NSswNzowMCIsImlzc3VlZCI6MTc1MDI0NjExNCwiZXhwaXJlZF9hdCI6IjIwMjUtMDYtMjBUMjA6Mjg6MzQuMDExOTQ2NSswNzowMCIsImV4cCI6MTc1MDQyNjExNH0.azwV30Fhm-uWi6fPWujKgR_s3PHTCU6OabLxIakExJ4';
+var SCREENS = [HomeScreen(), const LoginScreen()];
+
+const double HEADER_SIZE = 22;
+const double MIN_HEIGHT_SIZED_BOX = 8;
+const double MAX_HEIGTH_SIZED_BOX = 12;
+const double TEXT_BUTTON_SIZE_AT_THE_END = 18;
+const double TITLE_H1 = 18;
+const double TITLE_H2 = 16;
+const double TITLE_H3 = 14;
+const double TITLE_H4 = 12;
+
+const REAL_ACCESS_TOKEN =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI2ODk2ZTVmLTE3NzEtNGMyNy04YjYwLTg4MDdkNGU2ZTExZSIsImlzcyI6ImE0MDRmMWMxLTcwNTgtNGFmNy05NzZhLTNhYWY2Zjc0MmZlOCIsImVtYWlsIjoiaHV5a2ltY3Vvbmc1QGdtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciIsImlzc3VlZF9hdCI6IjIwMjUtMDYtMTlUMTk6MzE6MTUuODgzNzcxNyswNzowMCIsImlzc3VlZCI6MTc1MDMzNjI3NSwiZXhwaXJlZF9hdCI6IjIwMjUtMDYtMjFUMjE6MzE6MTUuODgzNzcxNyswNzowMCIsImV4cCI6MTc1MDUxNjI3NX0.QQ7LdGEHtWu9xcRyDM9vmP1WeF67oB42Dvumr0hVEWk';

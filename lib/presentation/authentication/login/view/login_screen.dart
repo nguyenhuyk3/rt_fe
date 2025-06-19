@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/data/repositories/authentication.dart';
 import 'package:rt_mobile/presentation/authentication/login/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/authentication/login/view/form.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  final bool loginRequired;
 
-  static Route<void> route() {
-    return MaterialPageRoute<void>(builder: (_) => const LoginScreen());
-  }
+  const LoginScreen({super.key, this.loginRequired = false});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +20,10 @@ class LoginScreen extends StatelessWidget {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: _AppBar(),
-        body: const Padding(padding: EdgeInsets.all(12), child: LoginForm()),
+        body: Padding(
+          padding: EdgeInsets.all(12),
+          child: LoginForm(loginRequired: loginRequired),
+        ),
       ),
     );
   }
@@ -35,7 +37,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
         'Đăng nhập',
         style: TextStyle(
           color: Colors.white,
-          fontSize: 21,
+          fontSize: HEADER_SIZE,
           fontWeight: FontWeight.w400,
         ),
       ),

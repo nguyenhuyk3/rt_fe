@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/data/repositories/film.dart';
 import 'package:rt_mobile/presentation/home/bloc/film/bloc.dart';
 import 'package:rt_mobile/presentation/home/view/film_carousel.dart';
@@ -26,7 +27,7 @@ class HomeScreen extends StatelessWidget {
                 child: const Icon(Icons.person, color: Colors.white),
               ),
 
-              const SizedBox(width: 10),
+              const SizedBox(width: MAX_HEIGTH_SIZED_BOX),
 
               const Text(
                 'Xin chào!',
@@ -36,6 +37,7 @@ class HomeScreen extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
+              
               const Spacer(),
             ],
           ),

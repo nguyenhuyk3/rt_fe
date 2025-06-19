@@ -95,10 +95,19 @@ class BookingTicketCreateOrder extends BookingTicketEvent {
       'showtime_id': showtimeId,
       'show_date': showDate,
       'seats': seats.map((seat) => seat.toJson()).toList(),
-      'fabs': fABs.map((fab) => fab.toJson()).toList(),
+      'fABs': fABs.map((fab) => fab.toJson()).toList(),
     };
   }
 
   @override
   List<Object> get props => [showtimeId, showDate, seats, fABs];
+}
+
+class BookingTicketChangeIsLogin extends BookingTicketEvent {
+  final bool isLogin;
+
+  const BookingTicketChangeIsLogin({required this.isLogin});
+  
+  @override
+  List<Object> get props => [isLogin];
 }

@@ -17,8 +17,12 @@ class TicketInformation {
   final int totalAmount;
   final String cinemaName;
   final String city;
+  final String location;
+  final String showDate;
+  final String startTime;
   final String roomName;
   final String seats;
+  final String genres;
   final String filmPoster;
   final String title;
   final String duration;
@@ -29,8 +33,12 @@ class TicketInformation {
     required this.totalAmount,
     required this.cinemaName,
     required this.city,
+    required this.location,
+    required this.showDate,
+    required this.startTime,
     required this.roomName,
     required this.seats,
+    required this.genres,
     required this.filmPoster,
     required this.title,
     required this.duration,
@@ -43,13 +51,17 @@ class TicketInformation {
       totalAmount: json['total_amount'] ?? 0,
       cinemaName: json['cinema_name'] ?? '',
       city: json['city'] ?? '',
+      location: json['location'] ?? '',
+      showDate: json['show_date'] ?? '',
+      startTime: json['start_time'] ?? '',
       roomName: json['room_name'] ?? '',
       seats: json['seats'] ?? '',
+      genres: json['genres'] ?? '',
       filmPoster: json['film_poster'] ?? '',
       title: json['title'] ?? '',
       duration: json['duration'] ?? '',
       fABs:
-          (json['fabs'] as List<dynamic>? ?? [])
+          (json['fABs'] as List<dynamic>? ?? [])
               .map((e) => FABBasicInformation.fromJson(e))
               .toList(),
     );

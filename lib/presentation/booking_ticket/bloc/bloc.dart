@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/data/models/film/film.product.dart';
 import 'package:rt_mobile/data/models/product/cart.dart';
 
@@ -31,6 +32,7 @@ class BookingTicketBloc extends Bloc<BookingTicketEvent, BookingTicketState> {
     on<BookingTicketClearOrder>(_onClearOrder);
     on<BookingTicketChoseStartTime>(_onChoseStartTime);
     on<BookingTicketCreateOrder>(_onCreateOrder);
+    on<BookingTicketChangeIsLogin>(_onChangeIsLogin);
   }
 
   void _onAddSeat(
@@ -177,6 +179,14 @@ class BookingTicketBloc extends Bloc<BookingTicketEvent, BookingTicketState> {
     Emitter<BookingTicketState> emit,
   ) async {
     try {
+      final accessToken = await storage.read(ACCESS_TOKEN);
+
+      if (accessToken == null || accessToken.isEmpty) {
+        emit(state.copyWith(isLogin: false));
+
+        return;
+      }
+
       final orderId = await orderRepository.createOrder(
         request: event.toJson(),
       );
@@ -185,7 +195,20 @@ class BookingTicketBloc extends Bloc<BookingTicketEvent, BookingTicketState> {
 
       emit(state.copyWith(orderId: orderId));
     } catch (e) {
+      if (e.toString().contains('401') ||
+          e.toString().contains('Unauthorized')) {
+        emit(state.copyWith(isLogin: false));
+
+        return;
+      }
       emit(state.copyWith(messageError: e.toString()));
     }
+  }
+
+  FutureOr<void> _onChangeIsLogin(
+    BookingTicketChangeIsLogin event,
+    Emitter<BookingTicketState> emit,
+  ) {
+    emit(state.copyWith(isLogin: event.isLogin));
   }
 }

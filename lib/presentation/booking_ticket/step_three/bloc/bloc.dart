@@ -109,7 +109,6 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
             ticketInformationJson,
           );
 
-          logger.f("lksjl1111");
           add(PaymentVerificationSuccess(ticketInformation: ticketInformation));
         } else {
           add(

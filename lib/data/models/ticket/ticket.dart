@@ -1,4 +1,5 @@
-import 'package:rt_mobile/app/paymentSuccess.dart';
+
+import 'package:rt_mobile/data/models/product/fab.product.dart';
 
 class Ticket {
   final String posterUrl;

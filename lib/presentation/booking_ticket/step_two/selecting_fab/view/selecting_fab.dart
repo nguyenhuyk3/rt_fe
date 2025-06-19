@@ -294,7 +294,7 @@ class _FABItemCard extends StatelessWidget {
                               BookingTicketAddFABToOrder(fAB: item),
                             );
 
-                            customSnackBarWithWidth(
+                            showCustomSnackBarWithWidth(
                               context: context,
                               width: 0.000001,
                               isSuccess: true,

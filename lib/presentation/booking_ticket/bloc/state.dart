@@ -9,6 +9,7 @@ class BookingTicketState extends Equatable {
   final String startTime;
   final double totalAmount;
   final int orderId;
+  final bool isLogin;
   final String messageError;
 
   BookingTicketState({
@@ -20,6 +21,7 @@ class BookingTicketState extends Equatable {
     this.startTime = '',
     this.totalAmount = 0.0,
     this.orderId = -1,
+    this.isLogin = true,
     this.messageError = '',
   }) : film = film ?? FilmProduct.empty();
 
@@ -32,6 +34,7 @@ class BookingTicketState extends Equatable {
     String? startTime,
     double? totalAmount,
     int? orderId,
+    bool? isLogin,
     String? messageError,
   }) {
     return BookingTicketState(
@@ -43,6 +46,7 @@ class BookingTicketState extends Equatable {
       startTime: startTime ?? this.startTime,
       totalAmount: totalAmount ?? this.totalAmount,
       orderId: orderId ?? this.orderId,
+      isLogin: isLogin ?? this.isLogin,
       messageError: messageError ?? this.messageError,
     );
   }
@@ -54,6 +58,7 @@ class BookingTicketState extends Equatable {
     seats,
     totalAmount,
     orderId,
+    isLogin,
     messageError,
   ];
 }

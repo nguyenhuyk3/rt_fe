@@ -3,33 +3,40 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:formz/formz.dart';
 
-import 'package:rt_mobile/core/utils/displayers/snack_bar.dart';
 import 'package:rt_mobile/core/utils/validator/validation_error_message.dart';
 import 'package:rt_mobile/presentation/authentication/forgot_password/view/step_1.dart';
 import 'package:rt_mobile/presentation/authentication/login/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/authentication/password/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/authentication/register/view/step_1.dart';
+import 'package:rt_mobile/presentation/widgets/snack_bar.dart';
 
 class LoginForm extends StatelessWidget {
-  const LoginForm({super.key});
+  final bool loginRequired;
+
+  const LoginForm({super.key, this.loginRequired = false});
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state.status.isFailure) {
-          showwCustomSnackBar(
+          showCustomSnackBar(
             context: context,
             isSuccess: false,
             message: 'Đăng nhập thất bại!!',
           );
         } else if (state.status.isSuccess) {
-          showwCustomSnackBar(
+          showCustomSnackBar(
             context: context,
             isSuccess: true,
             message: 'Đăng nhập thành công!!',
           );
-          //  context.read<LoginBloc>().add(LoginEmailChanged(email: email));
+
+          if (loginRequired) {
+            await Future.delayed(Duration(seconds: 2));
+
+            Navigator.pop(context);
+          }
         }
       },
       child: Column(

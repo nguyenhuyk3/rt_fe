@@ -34,4 +34,15 @@ class BasicFABInfo {
   final int quantity;
 
   const BasicFABInfo({required this.fABName, required this.quantity});
+
+  factory BasicFABInfo.fromJson(Map<String, dynamic> json) {
+    return BasicFABInfo(
+      fABName: json['name'] ?? '',
+      quantity: json['quantity'] ?? 0,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'name': fABName, 'quantity': quantity};
+  }
 }
