@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:rt_mobile/core/constants/others.dart';
 
 import 'package:rt_mobile/data/models/api_response.dart';
 
@@ -13,12 +14,12 @@ class PaymentService {
   Future<APIReponse> createPaymentResponse({
     required int orderId,
     required int amount,
-    required String accessToken,
   }) async {
+    final token = await storage.read(ACCESS_TOKEN);
     final response = await dio.post(
       '/payment_service/momo/customer/create_payment_response',
       data: {'order_id': orderId, 'amount': amount, 'platform': 'mobile'},
-      options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
     );
 
     return APIReponse(statusCode: response.statusCode, data: response.data);

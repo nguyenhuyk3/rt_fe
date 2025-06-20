@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:formz/formz.dart';
+import 'package:rt_mobile/app/app.main.dart';
 
 import 'package:rt_mobile/core/utils/validator/validation_error_message.dart';
 import 'package:rt_mobile/presentation/authentication/forgot_password/view/step_1.dart';
@@ -11,9 +12,7 @@ import 'package:rt_mobile/presentation/authentication/register/view/step_1.dart'
 import 'package:rt_mobile/presentation/widgets/snack_bar.dart';
 
 class LoginForm extends StatelessWidget {
-  final bool loginRequired;
-
-  const LoginForm({super.key, this.loginRequired = false});
+  const LoginForm({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +31,11 @@ class LoginForm extends StatelessWidget {
             message: 'Đăng nhập thành công!!',
           );
 
-          if (loginRequired) {
-            await Future.delayed(Duration(seconds: 2));
-
-            Navigator.pop(context);
-          }
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (_) => AppView()),
+            (Route<dynamic> route) => false,
+          );
         }
       },
       child: Column(
@@ -44,8 +43,11 @@ class LoginForm extends StatelessWidget {
         children: [
           // Information fields
           const SizedBox(height: 20),
+
           _EmailInput(),
+
           const SizedBox(height: 20),
+
           _PasswordInput(),
 
           Row(
@@ -55,19 +57,23 @@ class LoginForm extends StatelessWidget {
 
           const Divider(thickness: 0.5, color: Colors.grey),
 
-          // Other login methods
           const SizedBox(height: 20),
+
+          // Other login methods
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [_FacebookLoginButton(), _GoogleLoginButton()],
           ),
 
-          const SizedBox(height: 18),
+          const SizedBox(height: 20),
+
           _RegistrationButton(),
 
           Spacer(),
 
           _LoginButton(),
+
+          const SizedBox(height: 20),
         ],
       ),
     );

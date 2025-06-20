@@ -5,10 +5,10 @@ class SecureStorageService {
   static final SecureStorageService _instance =
       SecureStorageService._internal();
 
-  // when calling SecureStorageService(), 
+  // when calling SecureStorageService(),
   // it does not create a new object but returns the previously initialized _instance.
   factory SecureStorageService() => _instance;
-  
+
   // private constructor
   SecureStorageService._internal();
 

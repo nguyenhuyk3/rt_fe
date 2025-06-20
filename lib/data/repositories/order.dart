@@ -7,10 +7,9 @@ class OrderRepository {
   OrderRepository({required this.orderService});
 
   Future<int> createOrder({required Map<String, dynamic> request}) async {
-    final response = await orderService.createOrder(
-      request: request,
-      accessToken: REAL_ACCESS_TOKEN,
-    );
+    logger.e(request);
+
+    final response = await orderService.createOrder(request: request);
 
     if (response.isSuccess) {
       final rawData = response.data['data'];

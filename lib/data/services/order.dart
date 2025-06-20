@@ -10,13 +10,13 @@ class OrderService {
 
   Future<APIReponse> createOrder({
     required Map<String, dynamic> request,
-    required String accessToken,
   }) async {
-    logger.e(request);
+    final token = await storage.read(ACCESS_TOKEN);
+    logger.i(token);
     final response = await dio.post(
       '/order_service/order/public/create',
       data: request,
-      options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
     );
 
     return APIReponse(statusCode: response.statusCode, data: response.data);

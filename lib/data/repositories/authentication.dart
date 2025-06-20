@@ -38,8 +38,9 @@ class AuthenticationRepository {
     final response = await loginService.logIn(email: email, password: password);
 
     if (response.statusCode == 200) {
-      storage.write(ACCESS_TOKEN, response.data[ACCESS_TOKEN]);
-      storage.write(REFRESH_TOKEN, response.data[REFRESH_TOKEN]);
+      await storage.write(ACCESS_TOKEN, response.data[ACCESS_TOKEN]);
+      await storage.write(REFRESH_TOKEN, response.data[REFRESH_TOKEN]);
+      await storage.write(EMAIL, response.data['access_payload'][EMAIL]);
     }
 
     return APIReponse(statusCode: response.statusCode);

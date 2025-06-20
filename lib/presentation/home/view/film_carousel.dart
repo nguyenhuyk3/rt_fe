@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/data/models/film/film.showtime.dart';
 import 'package:rt_mobile/presentation/cubit/change_tab/change_tab.dart';
 import 'package:rt_mobile/presentation/film_detail/film_detail_screen.dart';
@@ -60,6 +61,7 @@ class _FilmCarouselContainer extends StatelessWidget {
         builder: (context) {
           _pageController.addListener(() {
             final newPage = _pageController.page?.round() ?? 0;
+
             if (newPage != context.read<ChangeTabCubit<int>>().state) {
               context.read<ChangeTabCubit<int>>().changeTab(newPage);
             }
@@ -128,7 +130,7 @@ class _Header extends StatelessWidget {
             'Đang công chiếu',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 20,
+              fontSize: TITLE_H0,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -195,22 +197,32 @@ class _CenteredFilmCard extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
+
             const SizedBox(height: 4),
+
             Text(
               '${film.duration} • ${film.genres}',
               style: const TextStyle(color: Colors.white70, fontSize: 13),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
+
             const SizedBox(height: 4),
+
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Icon(Icons.star, color: Colors.amber, size: 16),
+
                 const SizedBox(width: 4),
+
                 Text(
                   '\${movie.rating}',
                   style: const TextStyle(color: Colors.white, fontSize: 13),
                 ),
+
                 const SizedBox(width: 4),
+
                 Text(
                   '(\${movie.votes})',
                   style: const TextStyle(color: Colors.white38, fontSize: 12),

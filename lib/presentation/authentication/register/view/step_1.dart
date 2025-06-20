@@ -23,9 +23,14 @@ class StepOneRegistratonScreen extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: 20),
+
           _EmailInput(),
+
           const Spacer(),
+
           _NextStepButton(),
+
+          const SizedBox(height: 20),
         ],
       ),
     );

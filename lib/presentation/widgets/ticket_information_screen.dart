@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:rt_mobile/app/app.main.dart';
 
 import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/core/utils/convetors/string.dart';
 import 'package:rt_mobile/data/models/others.dart';
-import 'package:rt_mobile/presentation/home/home_screen.dart';
 
 // ===== MAIN SCREEN =====
 class TicketInformationScreen extends StatelessWidget {
@@ -500,9 +500,10 @@ class _ContinuationButton extends StatelessWidget {
       height: 46,
       child: ElevatedButton(
         onPressed: () {
-          Navigator.push(
+          Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
+            MaterialPageRoute(builder: (_) => AppView()),
+            (Route<dynamic> route) => false,
           );
         },
         style: ElevatedButton.styleFrom(

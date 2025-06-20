@@ -40,6 +40,8 @@ class StepTwoRegistrationPage extends StatelessWidget {
           const Spacer(),
 
           _NextStepButton(),
+
+          const SizedBox(height: 20),
         ],
       ),
     );

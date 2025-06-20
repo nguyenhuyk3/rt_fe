@@ -20,10 +20,7 @@ class LoginScreen extends StatelessWidget {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: _AppBar(),
-        body: Padding(
-          padding: EdgeInsets.all(12),
-          child: LoginForm(loginRequired: loginRequired),
-        ),
+        body: Padding(padding: EdgeInsets.all(12), child: LoginForm()),
       ),
     );
   }

@@ -8,12 +8,10 @@ class PaymentRepository {
   Future<String> createPaymentResponse({
     required int orderId,
     required int amount,
-    required String accessToken,
   }) async {
     final response = await paymentService.createPaymentResponse(
       orderId: orderId,
       amount: amount,
-      accessToken: accessToken,
     );
 
     if (response.isSuccess) {

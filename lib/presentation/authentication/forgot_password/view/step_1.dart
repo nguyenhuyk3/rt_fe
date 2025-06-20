@@ -16,13 +16,17 @@ class StepOneForgotPasswordPage extends StatelessWidget {
       title: 'Quên mật khẩu',
       allowBack: true,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 20),
+          
           _EmailInput(),
 
           const Spacer(),
 
           _NextStepButton(),
+
+          const SizedBox(height: 20),
         ],
       ),
     );

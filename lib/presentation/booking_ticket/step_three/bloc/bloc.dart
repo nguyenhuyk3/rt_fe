@@ -133,7 +133,6 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
       final paymenDeepLink = await paymentRepository.createPaymentResponse(
         orderId: event.orderId,
         amount: event.amount,
-        accessToken: REAL_ACCESS_TOKEN,
       );
 
       emit(

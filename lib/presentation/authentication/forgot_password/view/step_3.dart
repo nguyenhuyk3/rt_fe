@@ -20,11 +20,14 @@ class StepThreeForgotPasswordPage extends StatelessWidget {
         children: [
           const SizedBox(height: 20),
           _PasswordInput(),
+          
           _ConfirmedPasswordInput(),
 
           const Spacer(),
 
           _NextStepButton(),
+
+          const SizedBox(height: 20),
         ],
       ),
     );

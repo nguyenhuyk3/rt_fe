@@ -21,7 +21,9 @@ import 'package:rt_mobile/data/services/order.dart';
 import 'package:rt_mobile/data/services/payment.dart';
 import 'package:rt_mobile/data/services/showtime.dart';
 import 'package:rt_mobile/presentation/authentication/forgot_password/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/authentication/login/view/login_screen.dart';
 import 'package:rt_mobile/presentation/authentication/register/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/cubit/auth/auth.dart';
 import 'package:rt_mobile/presentation/cubit/change_tab/change_tab.dart';
 
 part 'app.view.dart';
@@ -99,6 +101,7 @@ class _MainAppState extends State<MainApp> {
                 ),
           ),
           BlocProvider(create: (_) => ForgotPasswordBloc()),
+          BlocProvider(create: (_) => AuthCubit()..checkAuthStatus()),
         ],
         child: AppRouter(),
       ),

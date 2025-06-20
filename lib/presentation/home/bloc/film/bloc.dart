@@ -23,8 +23,6 @@ class FilmsBloc extends Bloc<FilmsEvent, FilmsState> {
   ) async {
     emit(FilmsLoading());
 
-    await storage.delete(ACCESS_TOKEN);
-
     try {
       final films = await filmRepository.getAllFilmsCurrentlyShowing();
 

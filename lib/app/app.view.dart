@@ -9,6 +9,8 @@ class AppView extends StatelessWidget {
       create: (_) => ChangeTabCubit<int>(initialState: 0),
       child: BlocBuilder<ChangeTabCubit<int>, int>(
         builder: (context, selectedIndex) {
+          final maxIndex = 1;
+          final safeIndex = selectedIndex.clamp(0, maxIndex);
           return Scaffold(
             /* 
                 IndexedStack is a widget in Flutter used to stack multiple widgets on top of each other 
@@ -16,7 +18,7 @@ class AppView extends StatelessWidget {
                 Other child widgets still exist in the widget tree, but are not displayed.
             */
             body: IndexedStack(
-              index: selectedIndex,
+              index: safeIndex,
               children: [
                 // Home Tab with its own Navigator
 
@@ -42,7 +44,7 @@ class AppView extends StatelessWidget {
                 ),
                 // Profile Tab with its own Navigator
                 Navigator(
-                  key: GlobalKey<NavigatorState>(),
+                  key: AppNavigatorService.profileNavigatorKey,
                   onGenerateRoute: (settings) {
                     return MaterialPageRoute(
                       builder: (_) => SCREENS[1],

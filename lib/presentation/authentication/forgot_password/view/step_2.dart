@@ -20,8 +20,10 @@ class StepTwoForgotPasswordPage extends StatelessWidget {
       title: 'Quên mật khẩu',
       allowBack: true,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 20),
+
           Row(
             children: [
               Expanded(
@@ -37,9 +39,12 @@ class StepTwoForgotPasswordPage extends StatelessWidget {
               ),
             ],
           ),
+
           const Spacer(),
 
           _NextStepButton(),
+
+          const SizedBox(height: 20),
         ],
       ),
     );

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/data/models/film/film.product.dart';
 import 'package:rt_mobile/data/models/product/cart.dart';
 
@@ -179,19 +178,11 @@ class BookingTicketBloc extends Bloc<BookingTicketEvent, BookingTicketState> {
     Emitter<BookingTicketState> emit,
   ) async {
     try {
-      final accessToken = await storage.read(ACCESS_TOKEN);
-
-      if (accessToken == null || accessToken.isEmpty) {
-        emit(state.copyWith(isLogin: false));
-
-        return;
-      }
-
       final orderId = await orderRepository.createOrder(
         request: event.toJson(),
       );
 
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(Duration(seconds: 2));
 
       emit(state.copyWith(orderId: orderId));
     } catch (e) {
